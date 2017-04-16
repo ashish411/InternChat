@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "342989424826",
+    "firebase_url": "https://internchat-89dee.firebaseio.com",
+    "project_id": "internchat-89dee",
+    "storage_bucket": "internchat-89dee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342989424826:android:8aa5e931aba6442e",
+        "android_client_info": {
+          "package_name": "com.example.ashish.internchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342989424826-9li6jgdnkb5hcpuul7395oa9o392io95.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ashish.internchat",
+            "certificate_hash": "02e1b8c06ed102eb957b83cf74a196bbed5b5717"
+          }
+        },
+        {
+          "client_id": "342989424826-jrvftrqpqg70ikqu6cn4nu0hnsjmqc3g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmGtZEidazDE36c08faNOKUmu6RaL3-X0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342989424826-jrvftrqpqg70ikqu6cn4nu0hnsjmqc3g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
