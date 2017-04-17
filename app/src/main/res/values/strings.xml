@@ -8,4 +8,16 @@
     <string name="login">Sign In</string>
     <string name="btn_link_to_reset">Send Link</string>
     <string name="signOut">Sign Out</string>
+    <string name="add_chat_room">Add</string>
+    <string name="chat_room_name">Enter Chat room name</string>
+    <string name="pwd_len_small">password should be atleast 5 characters long</string>
+    <string name="email_empty">Please Enter email</string>
+    <string name="not_valid_email">Enter valid email</string>
+    <string name="pwd_empty">Enter password</string>
+    <string name="login_fail">Authentication fail ! Check your email id and password</string>
+    <string name="no_network">Check your network Connection</string>
+    <string name="authFail">Authentication Fail</string>
+    <string name="lbl_forgot_password">Forgot password?</string>
+    <string name="forgot_password_msg">We just need your registered Email Id to send you password reset instructions.</string>
+
 </resources>

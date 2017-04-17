@@ -9,12 +9,12 @@ import java.util.Date;
 public class ChatMessage {
 
     private String messageText;
-    private String messageUser;
+    private String messageEmail;
     private long messageTime;
 
-    public ChatMessage(String messageText, String messageUser) {
+    public ChatMessage(String messageText, String messageEmail) {
         this.messageText = messageText;
-        this.messageUser = messageUser;
+        this.messageEmail = messageEmail;
 
         this.messageTime = new Date().getTime();
     }
@@ -29,12 +29,12 @@ public class ChatMessage {
         this.messageText = messageText;
     }
 
-    public String getMessageUser() {
-        return messageUser;
+    public String getMessageEmail() {
+        return messageEmail;
     }
 
-    public void setMessageUser(String messageUser) {
-        this.messageUser = messageUser;
+    public void setMessageEmail(String messageEmail) {
+        this.messageEmail = messageEmail;
     }
 
     public long getMessageTime() {

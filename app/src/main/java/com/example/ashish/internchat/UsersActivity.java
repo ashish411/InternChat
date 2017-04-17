@@ -1,8 +1,11 @@
 package com.example.ashish.internchat;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -31,15 +36,17 @@ import java.util.List;
 
 public class UsersActivity extends AppCompatActivity {
 
-    private TextView noUserText;
+
     private ListView mUserList;
-    private ProgressDialog pd;
     private DatabaseReference mFirebaseDatabaseRef;
     private static final String LOG_TAG = UsersActivity.class.getSimpleName();
-    private String mUserDb = "Users";
+    private String USER_DB = "Users";
     private List<String> mUserArray;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
+    private final String GROUP_NAME = "groups";
+    private ArrayAdapter<String> mAdapter;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onStart() {
@@ -50,7 +57,7 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (authStateListener != null){
+        if (authStateListener != null) {
             mAuth.removeAuthStateListener(authStateListener);
         }
     }
@@ -59,7 +66,6 @@ public class UsersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
-
         mAuth = FirebaseAuth.getInstance();
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -67,31 +73,39 @@ public class UsersActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                if (user == null){
-                    startActivity(new Intent(UsersActivity.this,MainActivity.class));
+                if (user == null) {
+                    startActivity(new Intent(UsersActivity.this, MainActivity.class));
                     finish();
                 }
 
             }
         };
 
-        mFirebaseDatabaseRef = FirebaseDatabase.getInstance().getReference(mUserDb);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress);
+        mFirebaseDatabaseRef = FirebaseDatabase.getInstance().getReference(USER_DB);
         mUserArray = new ArrayList<>();
-        noUserText = (TextView) findViewById(R.id.noUsersText);
         mUserList = (ListView) findViewById(R.id.usersList);
+
+
 
         mFirebaseDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                     UserDetail user = ds.getValue(UserDetail.class);
                     String name = user.getmUserName();
-                    mUserArray.add(name);
-                }
 
-                mUserList.setAdapter(new ArrayAdapter<String>(UsersActivity.this,android.R.layout.simple_list_item_1,mUserArray));
+                    mUserArray.add(name);
+
+
+                }
+                mAdapter = new ArrayAdapter<String>(UsersActivity.this,android.R.layout.simple_list_item_1,mUserArray);
+                mUserList.setAdapter(mAdapter);
+                mProgressBar.setVisibility(View.GONE);
+
+                mUserList.setEmptyView(findViewById(R.id.loading));
 
             }
 
@@ -105,29 +119,39 @@ public class UsersActivity extends AppCompatActivity {
         mUserList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(UsersActivity.this,ChatActivity.class));
+
+                UserDetail userDetail = new UserDetail();
+                userDetail.setmChatWith(mUserArray.get(position));
+                Log.i(LOG_TAG,userDetail.mChatWith);
+                Intent intent = new Intent(UsersActivity.this,ChatActivity.class);
+                intent.putExtra("sendData",userDetail.getmChatWith());
+               startActivity(intent);
+
             }
         });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.users_menu,menu);
+        inflater.inflate(R.menu.users_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case R.id.signOutAction :
+        switch (item.getItemId()) {
+            case R.id.signOutAction:
                 mAuth.signOut();
                 return true;
 
             default:
-               return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
 
     }
+
+
 }
