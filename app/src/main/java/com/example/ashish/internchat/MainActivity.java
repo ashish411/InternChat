@@ -1,40 +1,32 @@
 package com.example.ashish.internchat;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ashish.internchat.Util.Utility;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,25 +36,29 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ImageButton btnSignIn;
     private String email, pwd;
-    public FrameLayout mFrameLayout;
+    public LinearLayout mFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         auth = FirebaseAuth.getInstance();
+
         setContentView(R.layout.activity_main);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
         emailText = (EditText) findViewById(R.id.editTextEmail);
         passwordText = (EditText) findViewById(R.id.editTextPassword);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password_main);
         btnSignIn = (ImageButton) findViewById(R.id.img_sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
-        mFrameLayout = (FrameLayout) findViewById(R.id.layout);
+        mFrameLayout = (LinearLayout) findViewById(R.id.layout);
+
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SignupActivity.class));
-                finish();
             }
         });
 
@@ -70,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ResetPasswordActivity.class));
-                finish();
             }
         });
+
         btnSignIn.setOnClickListener(new View.OnClickListener() {
 
 
@@ -83,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 email = emailText.getText().toString();
                 pwd = passwordText.getText().toString();
 
-                Utility utility = new Utility();
                 Boolean isNetworkAv = isNetworkAvailable();
 
                 if (!isNetworkAv) {
@@ -170,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                                 pd.dismiss();
                                 startActivity(new Intent(MainActivity.this, UsersActivity.class));
-                                overridePendingTransition(R.anim.slide_in,R.anim.slide_out);
+                                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                             }
                         }
                     });
@@ -182,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public  Boolean isNetworkAvailable() {
+    public Boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();

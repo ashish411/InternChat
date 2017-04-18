@@ -11,7 +11,7 @@ public class UserDetail {
     public String mChatWith;
     public String mUserUid;
 
-    public UserDetail(){
+    public UserDetail() {
 
     }
 
@@ -23,7 +23,7 @@ public class UserDetail {
         this.mUserUid = mUserUid;
     }
 
-    public UserDetail(String mUserName, String mPassword , String mUserUid) {
+    public UserDetail(String mUserName, String mPassword, String mUserUid) {
         this.mUserName = mUserName;
         this.mPassword = mPassword;
         this.mUserUid = mUserUid;

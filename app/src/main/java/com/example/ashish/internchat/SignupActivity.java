@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -38,13 +39,17 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference mFirebaseDatabaseRef;
     private LinearLayout mLinearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         mLinearLayout = (LinearLayout) findViewById(R.id.linLayout);
         auth = FirebaseAuth.getInstance();
-
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(getString(R.string.register));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         emailText = (EditText) findViewById(R.id.editTextEmail);
         passwordText = (EditText) findViewById(R.id.editTextPassword);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
@@ -127,9 +132,8 @@ public class SignupActivity extends AppCompatActivity {
 
                     snackbar.show();
                     return;
-                }
-                else {
-                            auth.createUserWithEmailAndPassword(inputEmail, inputPassword)
+                } else {
+                    auth.createUserWithEmailAndPassword(inputEmail, inputPassword)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {

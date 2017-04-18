@@ -1,13 +1,10 @@
 package com.example.ashish.internchat;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,13 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,7 +59,9 @@ public class UsersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
         mAuth = FirebaseAuth.getInstance();
-
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(getString(R.string.users_lbl));
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -87,7 +81,6 @@ public class UsersActivity extends AppCompatActivity {
         mUserList = (ListView) findViewById(R.id.usersList);
 
 
-
         mFirebaseDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -101,7 +94,7 @@ public class UsersActivity extends AppCompatActivity {
 
 
                 }
-                mAdapter = new ArrayAdapter<String>(UsersActivity.this,android.R.layout.simple_list_item_1,mUserArray);
+                mAdapter = new ArrayAdapter<String>(UsersActivity.this, android.R.layout.simple_list_item_1, mUserArray);
                 mUserList.setAdapter(mAdapter);
                 mProgressBar.setVisibility(View.GONE);
 
@@ -122,10 +115,11 @@ public class UsersActivity extends AppCompatActivity {
 
                 UserDetail userDetail = new UserDetail();
                 userDetail.setmChatWith(mUserArray.get(position));
-                Log.i(LOG_TAG,userDetail.mChatWith);
-                Intent intent = new Intent(UsersActivity.this,ChatActivity.class);
-                intent.putExtra("sendData",userDetail.getmChatWith());
-               startActivity(intent);
+                Log.i(LOG_TAG, userDetail.mChatWith);
+                Intent intent = new Intent(UsersActivity.this, ChatActivity.class);
+                intent.putExtra("sendData", userDetail.getmChatWith());
+                startActivity(intent);
+                UsersActivity.this.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
             }
         });

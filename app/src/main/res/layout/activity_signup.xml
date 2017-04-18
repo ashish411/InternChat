@@ -4,10 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin"
     android:id="@+id/linLayout"
     tools:context="com.example.ashish.internchat.SignupActivity"
     android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="?attr/colorPrimary">
+    </android.support.v7.widget.Toolbar>
+
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -16,7 +25,7 @@
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="162dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
@@ -31,7 +40,7 @@
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:ems="10"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:hint="@string/password"

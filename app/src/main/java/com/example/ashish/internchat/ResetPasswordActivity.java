@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +31,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
-
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.resetPassword));
         inputEmail = (EditText) findViewById(R.id.editTextEmail);
         btn_link = (ImageButton) findViewById(R.id.reset_password_btn);
         mAuth = FirebaseAuth.getInstance();
@@ -40,24 +44,24 @@ public class ResetPasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = inputEmail.getText().toString();
 
-                if (TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     Snackbar snackbar = Snackbar.make(mLinearLayout, getString(R.string.email_empty), Snackbar.LENGTH_LONG);
                     View sbView = snackbar.getView();
                     TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                     textView.setTextColor(Color.YELLOW);
                     snackbar.show();
                     return;
-                }else {
-                        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ResetPasswordActivity.this, "link send . check email ", Toast.LENGTH_SHORT).show();
+                } else {
+                    mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(ResetPasswordActivity.this, "link send . check email ", Toast.LENGTH_SHORT).show();
 
-                        } else {
-                            Toast.makeText(ResetPasswordActivity.this, "Authorisation failed", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ResetPasswordActivity.this, "Authorisation failed", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
                     });
                 }
             }

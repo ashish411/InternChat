@@ -11,6 +11,7 @@ public class ChatMessage {
     private String messageText;
     private String messageEmail;
     private long messageTime;
+    private String mLoadImageUrl;
 
     public ChatMessage(String messageText, String messageEmail) {
         this.messageText = messageText;
@@ -19,7 +20,8 @@ public class ChatMessage {
         this.messageTime = new Date().getTime();
     }
 
-    public ChatMessage(){}
+    public ChatMessage() {
+    }
 
     public String getMessageText() {
         return messageText;

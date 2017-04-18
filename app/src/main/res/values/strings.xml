@@ -19,5 +19,9 @@
     <string name="authFail">Authentication Fail</string>
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to send you password reset instructions.</string>
+    <string name="register">Register</string>
+    <string name="resetPassword">Reset Account</string>
+    <string name="users_lbl">Users</string>
+    <string name="msg_empty">Enter a message to send</string>
 
 </resources>
